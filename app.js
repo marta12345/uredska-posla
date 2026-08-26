@@ -2,7 +2,9 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "uredska-posla:tasks";
+  var TASKS_KEY = "uredska-posla:tasks";
+  var COLLEAGUES_KEY = "uredska-posla:colleagues";
+  var SIDEBAR_KEY = "uredska-posla:sidebar-collapsed";
 
   var STATUS_LABELS = {
     todo: "Za napraviti",
@@ -12,28 +14,37 @@
   var PRIORITY_LABELS = { low: "Niski", medium: "Srednji", high: "Visoki" };
   var STATUS_ORDER = ["todo", "in-progress", "done"];
 
-  var tasks = loadTasks();
+  var tasks = load(TASKS_KEY);
+  var colleagues = load(COLLEAGUES_KEY);
   var filter = "all";
   var search = "";
 
   // --- Elementi ---
-  var form = document.getElementById("task-form");
+  var shell = document.getElementById("shell");
+  var sidebarToggle = document.getElementById("sidebar-toggle");
+  var sidebarNav = document.getElementById("sidebar-nav");
+
+  var taskForm = document.getElementById("task-form");
   var listEl = document.getElementById("task-list");
   var searchEl = document.getElementById("search");
   var filtersEl = document.getElementById("filters");
+  var assigneeSelect = document.getElementById("f-assignee");
+
+  var colleagueForm = document.getElementById("colleague-form");
+  var colleagueListEl = document.getElementById("colleague-list");
 
   // --- Perzistencija ---
-  function loadTasks() {
+  function load(key) {
     try {
-      var raw = localStorage.getItem(STORAGE_KEY);
+      var raw = localStorage.getItem(key);
       return raw ? JSON.parse(raw) : [];
     } catch (e) {
       return [];
     }
   }
-  function saveTasks() {
+  function save(key, value) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
       /* ignore */
     }
@@ -59,7 +70,31 @@
       .replace(/'/g, "&#39;");
   }
 
-  // --- Akcije ---
+  /* ===================== SIDEBAR ===================== */
+
+  function applySidebarState(collapsed) {
+    shell.classList.toggle("sidebar-collapsed", collapsed);
+    // Znak "+" kad je otvoren (za zatvaranje), "»" kad je zatvoren (za otvaranje)
+    sidebarToggle.textContent = collapsed ? "»" : "+";
+    save(SIDEBAR_KEY, collapsed);
+  }
+
+  function toggleSidebar() {
+    applySidebarState(!shell.classList.contains("sidebar-collapsed"));
+  }
+
+  function switchView(view) {
+    document.getElementById("view-tasks").classList.toggle("hidden", view !== "tasks");
+    document
+      .getElementById("view-colleagues")
+      .classList.toggle("hidden", view !== "colleagues");
+    Array.prototype.forEach.call(sidebarNav.querySelectorAll(".nav-card"), function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-view") === view);
+    });
+  }
+
+  /* ===================== ZADACI ===================== */
+
   function addTask(e) {
     e.preventDefault();
     var title = document.getElementById("f-title").value.trim();
@@ -74,29 +109,28 @@
       deadline: document.getElementById("f-deadline").value,
       createdAt: Date.now(),
     });
-    saveTasks();
-    form.reset();
+    save(TASKS_KEY, tasks);
+    taskForm.reset();
     document.getElementById("f-priority").value = "medium";
-    render();
+    renderTasks();
   }
 
   function updateStatus(id, status) {
     tasks = tasks.map(function (t) {
       return t.id === id ? Object.assign({}, t, { status: status }) : t;
     });
-    saveTasks();
-    render();
+    save(TASKS_KEY, tasks);
+    renderTasks();
   }
 
   function removeTask(id) {
     tasks = tasks.filter(function (t) {
       return t.id !== id;
     });
-    saveTasks();
-    render();
+    save(TASKS_KEY, tasks);
+    renderTasks();
   }
 
-  // --- Filtriranje ---
   function getFiltered() {
     var q = search.trim().toLowerCase();
     return tasks
@@ -113,7 +147,6 @@
       });
   }
 
-  // --- Prikaz statistike ---
   function renderStats() {
     document.getElementById("stat-total").textContent = tasks.length;
     document.getElementById("stat-todo").textContent = tasks.filter(function (t) {
@@ -127,8 +160,7 @@
     }).length;
   }
 
-  // --- Prikaz liste ---
-  function render() {
+  function renderTasks() {
     renderStats();
     var items = getFiltered();
     listEl.innerHTML = "";
@@ -210,12 +242,109 @@
     });
   }
 
-  // --- Event handleri ---
-  form.addEventListener("submit", addTask);
+  /* ===================== KOLEGE ===================== */
+
+  function addColleague(e) {
+    e.preventDefault();
+    var name = document.getElementById("c-name").value.trim();
+    if (!name) return;
+    colleagues.push({
+      id: uid(),
+      name: name,
+      role: document.getElementById("c-role").value.trim(),
+    });
+    colleagues.sort(function (a, b) {
+      return a.name.localeCompare(b.name, "hr");
+    });
+    save(COLLEAGUES_KEY, colleagues);
+    colleagueForm.reset();
+    renderColleagues();
+    renderAssigneeOptions();
+  }
+
+  function removeColleague(id) {
+    colleagues = colleagues.filter(function (c) {
+      return c.id !== id;
+    });
+    save(COLLEAGUES_KEY, colleagues);
+    renderColleagues();
+    renderAssigneeOptions();
+  }
+
+  function renderColleagues() {
+    colleagueListEl.innerHTML = "";
+    if (colleagues.length === 0) {
+      var empty = document.createElement("div");
+      empty.className = "empty";
+      empty.innerHTML =
+        '<span class="empty-badge">👥</span><p>Nema kolega. Dodaj prvog kolegu s lijeve strane.</p>';
+      colleagueListEl.appendChild(empty);
+      return;
+    }
+
+    colleagues.forEach(function (col) {
+      var taskCount = tasks.filter(function (t) {
+        return t.assignee === col.name;
+      }).length;
+
+      var li = document.createElement("li");
+      li.className = "colleague-card";
+      li.innerHTML =
+        '<div class="colleague-main">' +
+        '<span class="colleague-avatar">' +
+        escapeHtml(col.name.charAt(0).toUpperCase()) +
+        "</span>" +
+        '<div class="colleague-info">' +
+        "<h3>" +
+        escapeHtml(col.name) +
+        "</h3>" +
+        (col.role ? '<span class="colleague-role">' + escapeHtml(col.role) + "</span>" : "") +
+        "</div>" +
+        "</div>" +
+        '<div class="colleague-actions">' +
+        '<span class="colleague-badge">' +
+        taskCount +
+        " zad." +
+        "</span>" +
+        '<button class="btn-delete" title="Obriši kolegu">✕</button>' +
+        "</div>";
+
+      li.querySelector(".btn-delete").addEventListener("click", function () {
+        removeColleague(col.id);
+      });
+
+      colleagueListEl.appendChild(li);
+    });
+  }
+
+  function renderAssigneeOptions() {
+    var current = assigneeSelect.value;
+    var html = '<option value="">— odaberi kolegu —</option>';
+    colleagues.forEach(function (col) {
+      html +=
+        '<option value="' + escapeHtml(col.name) + '">' + escapeHtml(col.name) + "</option>";
+    });
+    assigneeSelect.innerHTML = html;
+    // zadrži prethodni odabir ako još postoji
+    assigneeSelect.value = current;
+  }
+
+  /* ===================== EVENT HANDLERI ===================== */
+
+  sidebarToggle.addEventListener("click", toggleSidebar);
+
+  sidebarNav.addEventListener("click", function (e) {
+    var btn = e.target.closest(".nav-card");
+    if (!btn) return;
+    switchView(btn.getAttribute("data-view"));
+  });
+
+  taskForm.addEventListener("submit", addTask);
+  colleagueForm.addEventListener("submit", addColleague);
 
   searchEl.addEventListener("input", function (e) {
     search = e.target.value;
-    render();
+    renderTasks();
   });
 
   filtersEl.addEventListener("click", function (e) {
@@ -225,8 +354,13 @@
     Array.prototype.forEach.call(filtersEl.querySelectorAll(".chip"), function (c) {
       c.classList.toggle("active", c === btn);
     });
-    render();
+    renderTasks();
   });
 
-  render();
+  /* ===================== INIT ===================== */
+
+  applySidebarState(load(SIDEBAR_KEY) === true);
+  renderAssigneeOptions();
+  renderTasks();
+  renderColleagues();
 })();
