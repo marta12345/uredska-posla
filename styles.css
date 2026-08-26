@@ -42,7 +42,14 @@ body {
 /* Header */
 .header { margin-bottom: 24px; }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand h1 { margin: 0; font-size: 1.9rem; letter-spacing: -0.02em; color: var(--text); }
+.brand h1 {
+  margin: 0; font-size: 1.9rem; letter-spacing: -0.02em; font-weight: 800;
+  background: linear-gradient(90deg, var(--purple), var(--indigo), var(--teal), var(--yellow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--teal); /* fallback za preglednike bez background-clip */
+}
 
 .brand-badge {
   display: inline-flex; align-items: center; justify-content: center;
