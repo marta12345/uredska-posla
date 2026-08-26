@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="hr">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- @ favicon na tabu preglednika -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232563eb'/%3E%3Ctext x='50' y='52' font-size='68' font-family='Arial, sans-serif' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='central'%3E@%3C/text%3E%3C/svg%3E"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ Uredska posla</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="brand">
+          <span class="brand-badge">@</span>
+          <h1>Uredska posla</h1>
+        </div>
+        <p class="subtitle">Upravljanje uredskim zadacima</p>
+      </header>
+
+      <section class="stats">
+        <div class="stat-card">
+          <span class="stat-num" id="stat-total">0</span>
+          <span class="stat-label">Ukupno</span>
+        </div>
+        <div class="stat-card stat-todo">
+          <span class="stat-num" id="stat-todo">0</span>
+          <span class="stat-label">Za napraviti</span>
+        </div>
+        <div class="stat-card stat-progress">
+          <span class="stat-num" id="stat-progress">0</span>
+          <span class="stat-label">U tijeku</span>
+        </div>
+        <div class="stat-card stat-done">
+          <span class="stat-num" id="stat-done">0</span>
+          <span class="stat-label">Gotovo</span>
+        </div>
+      </section>
+
+      <div class="layout">
+        <aside class="form-panel">
+          <h2>Novi zadatak</h2>
+          <form id="task-form" class="task-form">
+            <label>
+              Naslov *
+              <input type="text" id="f-title" placeholder="npr. Pripremiti izvještaj" required />
+            </label>
+            <label>
+              Opis
+              <textarea id="f-desc" placeholder="Kratak opis zadatka" rows="3"></textarea>
+            </label>
+            <label>
+              Dodijeljeno
+              <input type="text" id="f-assignee" placeholder="Ime kolege" />
+            </label>
+            <div class="form-row">
+              <label>
+                Prioritet
+                <select id="f-priority">
+                  <option value="low">Niski</option>
+                  <option value="medium" selected>Srednji</option>
+                  <option value="high">Visoki</option>
+                </select>
+              </label>
+              <label>
+                Rok
+                <input type="date" id="f-deadline" />
+              </label>
+            </div>
+            <button type="submit" class="btn-primary">Dodaj zadatak</button>
+          </form>
+        </aside>
+
+        <main class="tasks-panel">
+          <div class="toolbar">
+            <input type="search" class="search" id="search" placeholder="Pretraži zadatke…" />
+            <div class="filters" id="filters">
+              <button class="chip active" data-filter="all">Svi</button>
+              <button class="chip" data-filter="todo">Za napraviti</button>
+              <button class="chip" data-filter="in-progress">U tijeku</button>
+              <button class="chip" data-filter="done">Gotovo</button>
+            </div>
+          </div>
+          <ul class="task-list" id="task-list"></ul>
+        </main>
+      </div>
+
+      <footer class="footer">
+        <span class="brand-badge small">@</span> Uredska posla · podaci se spremaju lokalno u pregledniku
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
