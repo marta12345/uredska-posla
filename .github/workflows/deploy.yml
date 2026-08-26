@@ -3,7 +3,6 @@ name: Deploy na GitHub Pages
 on:
   push:
     branches:
-      - main
       - feat/uredska-posla-app
   workflow_dispatch:
 
