@@ -41,9 +41,9 @@ body {
 .shell {
   display: grid;
   grid-template-columns: 260px 1fr;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
   transition: grid-template-columns 0.2s ease;
-  margin-top: 70px; /* prostor za datum/vrijeme gore */
+  margin-top: 100px; /* prostor za datum/vrijeme gore */
 }
 .shell.sidebar-collapsed { grid-template-columns: 110px 1fr; }
 
