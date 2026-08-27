@@ -160,6 +160,15 @@ body {
 /* Prikazi */
 .view.hidden { display: none; }
 
+/* Content brand — vidljiv samo kad je sidebar skupljen */
+.content-brand {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.shell.sidebar-collapsed .content-brand { display: flex; }
+
 .page-head { margin-bottom: 24px; }
 .page-title {
   margin: 0; font-size: 1.7rem; letter-spacing: -0.02em; font-weight: 800;
