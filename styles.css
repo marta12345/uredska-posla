@@ -190,14 +190,17 @@ body {
 /* Datum i vrijeme gore desno */
 .datetime {
   position: fixed;
-  top: 16px;
-  right: 24px;
+  top: 0;
+  right: 0;
   text-align: right;
   color: var(--muted);
   font-size: 0.88rem;
   line-height: 1.5;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--bg);
+  border-bottom-left-radius: 10px;
 }
 
 .datetime .dt-time {
