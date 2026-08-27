@@ -405,13 +405,13 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacit
 
 /* ===================== SIVA TEMA ===================== */
 .theme-grey {
-  --bg: #c8c8c8;
-  --surface: #d6d6d6;
-  --surface-2: #e0e0e0;
-  --border: #aaaaaa;
-  --text: #1a1a1a;
-  --muted: #4a4a4a;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --bg: #a8a8a8;
+  --surface: #b8b8b8;
+  --surface-2: #c4c4c4;
+  --border: #8a8a8a;
+  --text: #111111;
+  --muted: #3a3a3a;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .theme-grey .brand-badge {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
