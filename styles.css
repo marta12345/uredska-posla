@@ -169,7 +169,9 @@ body {
   display: none;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
+  position: absolute;
+  top: 16px;
+  left: 24px;
 }
 .shell.sidebar-collapsed .content-brand { display: flex; }
 .content-brand-title {
