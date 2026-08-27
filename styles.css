@@ -421,18 +421,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacit
   -webkit-text-stroke: 0.5px #666666;
   text-stroke: 0.5px #666666;
 }
-.theme-grey .stat-progress {
-  border-left-color: var(--yellow);
-  box-shadow: inset 0 0 0 1px #888888;
-}
-.theme-grey .task-card.status-in-progress {
-  border-left-color: var(--yellow);
-  box-shadow: 0 0 0 1px #888888;
-}
 .theme-grey .priority-medium {
-  border: 1px solid #888888;
-}
-.theme-grey .brand-badge {
   border: 1px solid #888888;
 }
 .theme-grey .datetime .dt-time {
