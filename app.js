@@ -357,8 +357,53 @@
     renderTasks();
   });
 
+  /* ===================== DEMO PODACI ===================== */
+
+  function seedDemoData() {
+    // Samo ako korisnik nema podataka (prvi posjet)
+    if (tasks.length > 0 || colleagues.length > 0) return;
+
+    colleagues = [
+      { id: uid(), name: "Ana Anić", role: "Računovodstvo" },
+      { id: uid(), name: "Ivan Ivić", role: "IT podrška" },
+      { id: uid(), name: "Marko Marković", role: "Prodaja" },
+      { id: uid(), name: "Petra Petrović", role: "Administracija" },
+    ];
+    save(COLLEAGUES_KEY, colleagues);
+
+    var now = Date.now();
+    var day = 86400000;
+    function futureDate(days) {
+      return new Date(now + days * day).toISOString().split("T")[0];
+    }
+    function pastDate(days) {
+      return new Date(now - days * day).toISOString().split("T")[0];
+    }
+
+    tasks = [
+      // Za napraviti
+      { id: uid(), title: "Pripremiti mjesečni izvještaj o troškovima", description: "Izvještaj za kolovoz, uključiti sve kategorije", assignee: "Ana Anić", status: "todo", priority: "high", deadline: futureDate(3), createdAt: now - 2 * day },
+      { id: uid(), title: "Naručiti uredski materijal (papir, toner)", description: "", assignee: "Ivan Ivić", status: "todo", priority: "low", deadline: futureDate(7), createdAt: now - 1 * day },
+      { id: uid(), title: "Zakazati sastanak tima za ponedjeljak", description: "Sala B, 10:00", assignee: "Marko Marković", status: "todo", priority: "medium", deadline: futureDate(2), createdAt: now },
+      { id: uid(), title: "Ažurirati popis kontakata klijenata", description: "Dodati nove kontakte iz srpnja", assignee: "Petra Petrović", status: "todo", priority: "low", deadline: futureDate(10), createdAt: now },
+      { id: uid(), title: "Rezervirati salu za prezentaciju", description: "Prezentacija novog projekta — petak 14:00", assignee: "Ana Anić", status: "todo", priority: "medium", deadline: futureDate(4), createdAt: now },
+
+      // U tijeku
+      { id: uid(), title: "Izraditi ponudu za novog klijenta", description: "Klijent: TechNova d.o.o.", assignee: "Marko Marković", status: "in-progress", priority: "high", deadline: futureDate(1), createdAt: now - 3 * day },
+      { id: uid(), title: "Organizirati arhivu dokumenata", description: "Digitalizacija papirnatih dokumenata iz 2025.", assignee: "Petra Petrović", status: "in-progress", priority: "medium", deadline: futureDate(14), createdAt: now - 5 * day },
+      { id: uid(), title: "Odgovoriti na upite s e-maila", description: "15 nepročitanih poruka od klijenata", assignee: "Ivan Ivić", status: "in-progress", priority: "medium", deadline: futureDate(0), createdAt: now - 1 * day },
+
+      // Gotovo
+      { id: uid(), title: "Isplatiti putne troškove zaposlenika", description: "Putni nalozi za lipanj", assignee: "Ana Anić", status: "done", priority: "high", deadline: pastDate(2), createdAt: now - 7 * day },
+      { id: uid(), title: "Poslati zapisnik sa sastanka", description: "Zapisnik sastanka od utorka", assignee: "Marko Marković", status: "done", priority: "low", deadline: pastDate(1), createdAt: now - 4 * day },
+      { id: uid(), title: "Potvrditi termin servisa printera", description: "", assignee: "Ivan Ivić", status: "done", priority: "low", deadline: pastDate(3), createdAt: now - 6 * day },
+    ];
+    save(TASKS_KEY, tasks);
+  }
+
   /* ===================== INIT ===================== */
 
+  seedDemoData();
   applySidebarState(load(SIDEBAR_KEY) === true);
   renderAssigneeOptions();
   renderTasks();
