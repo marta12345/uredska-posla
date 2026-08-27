@@ -205,6 +205,11 @@ body {
 .datetime .dt-date {
   color: var(--muted);
 }
+.datetime .dt-week {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+}
 
 .page-head { margin-bottom: 24px; }
 .page-title {

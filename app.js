@@ -412,8 +412,14 @@
     var day = HR_DAYS[now.getDay()];
     var date = now.toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
     var time = now.toLocaleTimeString("hr-HR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    // Izračun tjedna u godini (ISO 8601)
+    var tmp = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    tmp.setDate(tmp.getDate() + 3 - ((tmp.getDay() + 6) % 7));
+    var firstThursday = new Date(tmp.getFullYear(), 0, 4);
+    firstThursday.setDate(firstThursday.getDate() + 3 - ((firstThursday.getDay() + 6) % 7));
+    var week = 1 + Math.round((tmp - firstThursday) / (7 * 86400000));
     datetimeEl.innerHTML =
-      '<span class="dt-time">' + time + "</span><br>" +
+      '<span class="dt-time">' + time + ' <span class="dt-week">(tj. ' + week + ')</span></span><br>' +
       '<span class="dt-date">' + day + ", " + date + "</span>";
   }
   updateDateTime();
