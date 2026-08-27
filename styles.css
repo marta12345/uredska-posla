@@ -58,7 +58,7 @@ body {
 .sidebar {
   background: var(--surface);
   border-right: 1px solid var(--border);
-  padding: 18px 14px;
+  padding: 0 14px 18px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -70,6 +70,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  padding-top: 14px;
 }
 
 .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
