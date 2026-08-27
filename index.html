@@ -47,13 +47,13 @@
 
       <!-- Glavni sadržaj -->
       <div class="content">
-        <!-- Gornja traka: naslov (kad je sidebar skupljen) + datum/vrijeme desno -->
-        <div class="content-topbar">
-          <header class="content-brand" id="content-brand">
-            <h1 class="content-brand-title">Uredska posla</h1>
-          </header>
-          <div class="datetime" id="datetime"></div>
-        </div>
+        <!-- Datum/vrijeme gore desno — uvijek vidljiv -->
+        <div class="datetime" id="datetime"></div>
+
+        <!-- Naslov koji se prikazuje samo kad je sidebar skupljen -->
+        <header class="content-brand" id="content-brand">
+          <h1 class="content-brand-title">Uredska posla</h1>
+        </header>
 
         <!-- PRIKAZ: Popis zadataka -->
         <div class="view" id="view-tasks">
