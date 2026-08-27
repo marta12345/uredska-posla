@@ -74,8 +74,8 @@
 
   function applySidebarState(collapsed) {
     shell.classList.toggle("sidebar-collapsed", collapsed);
-    // Znak "+" kad je otvoren (za zatvaranje), "»" kad je zatvoren (za otvaranje)
-    sidebarToggle.textContent = collapsed ? "»" : "+";
+    // « kad je otvoren (smanji), » kad je sažet (otvori)
+    sidebarToggle.textContent = collapsed ? "»" : "«";
     save(SIDEBAR_KEY, collapsed);
   }
 

@@ -102,17 +102,18 @@ body {
 
 .sidebar-toggle {
   flex: none;
-  width: 30px; height: 30px;
-  border: 1px solid var(--border);
+  width: 34px; height: 34px;
+  border: none;
   background: var(--surface-2);
-  color: var(--text);
-  border-radius: 8px;
-  font-size: 1.2rem;
+  color: var(--muted);
+  border-radius: 10px;
+  font-size: 1.1rem;
   line-height: 1;
   cursor: pointer;
   transition: all 0.15s;
+  box-shadow: var(--shadow);
 }
-.sidebar-toggle:hover { border-color: var(--teal); color: var(--teal); }
+.sidebar-toggle:hover { background: var(--border); color: var(--teal); }
 
 /* Kad je sažet, gumb i badge centrirani, badge/toggle idu u stupac */
 .shell.sidebar-collapsed .sidebar-head { flex-direction: column; align-items: center; gap: 12px; }
