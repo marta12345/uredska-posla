@@ -171,6 +171,17 @@ body {
   margin-bottom: 24px;
 }
 .shell.sidebar-collapsed .content-brand { display: flex; }
+.content-brand-title {
+  margin: 0;
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--purple), var(--indigo), var(--teal), var(--yellow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--teal);
+}
 
 .page-head { margin-bottom: 24px; }
 .page-title {
