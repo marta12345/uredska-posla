@@ -387,6 +387,7 @@
       { id: uid(), title: "Zakazati sastanak tima za ponedjeljak", description: "Sala B, 10:00", assignee: "Marko Marković", status: "todo", priority: "medium", deadline: futureDate(2), createdAt: now },
       { id: uid(), title: "Ažurirati popis kontakata klijenata", description: "Dodati nove kontakte iz srpnja", assignee: "Petra Petrović", status: "todo", priority: "low", deadline: futureDate(10), createdAt: now },
       { id: uid(), title: "Rezervirati salu za prezentaciju", description: "Prezentacija novog projekta — petak 14:00", assignee: "Ana Anić", status: "todo", priority: "medium", deadline: futureDate(4), createdAt: now },
+      { id: uid(), title: "Zaliti cvijeće", description: "Zaliti cvijeće u uredu i na recepciji", assignee: "Petra Petrović", status: "todo", priority: "low", deadline: futureDate(1), createdAt: now },
 
       // U tijeku
       { id: uid(), title: "Izraditi ponudu za novog klijenta", description: "Klijent: TechNova d.o.o.", assignee: "Marko Marković", status: "in-progress", priority: "high", deadline: futureDate(1), createdAt: now - 3 * day },
