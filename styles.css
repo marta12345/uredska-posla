@@ -416,11 +416,6 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacit
 .theme-grey .brand-badge {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
-.theme-grey .brand-title,
-.theme-grey .content-brand-title {
-  -webkit-text-stroke: 1.5px #3a3a3a;
-  text-stroke: 1.5px #3a3a3a;
-}
 .theme-grey .datetime .dt-time {
   color: var(--text);
 }
