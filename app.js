@@ -402,6 +402,29 @@
     save(TASKS_KEY, tasks);
   }
 
+  /* ===================== TEMA ===================== */
+
+  var THEME_KEY = "uredska-posla:theme";
+  var themeToggle = document.getElementById("theme-toggle");
+  var themeIcon = document.getElementById("theme-icon");
+
+  function applyTheme(theme) {
+    document.body.classList.toggle("theme-grey", theme === "grey");
+    themeIcon.textContent = theme === "grey" ? "☀️" : "🌙";
+    save(THEME_KEY, theme);
+  }
+
+  function toggleTheme() {
+    var current = document.body.classList.contains("theme-grey") ? "grey" : "dark";
+    applyTheme(current === "grey" ? "dark" : "grey");
+  }
+
+  themeToggle.addEventListener("click", toggleTheme);
+
+  // Primijeni spremljenu temu
+  var savedTheme = load(THEME_KEY);
+  if (savedTheme === "grey") applyTheme("grey");
+
   /* ===================== DATUM I VRIJEME ===================== */
 
   var datetimeEl = document.getElementById("datetime");
