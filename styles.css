@@ -422,7 +422,8 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacit
   text-stroke: 0.5px #666666;
 }
 .theme-grey .priority-medium {
-  border: 1px solid #888888;
+  -webkit-text-stroke: 0.5px #888888;
+  text-stroke: 0.5px #888888;
 }
 .theme-grey .datetime .dt-time {
   color: var(--text);
