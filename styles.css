@@ -164,11 +164,16 @@ body {
 .view.hidden { display: none; }
 
 /* Content brand — vidljiv samo kad je sidebar skupljen */
+.content-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
 .content-brand {
   display: none;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
 }
 .shell.sidebar-collapsed .content-brand { display: flex; }
 .content-brand-title {
@@ -181,6 +186,24 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: var(--teal);
+}
+
+/* Datum i vrijeme gore desno */
+.datetime {
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.datetime .dt-time {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.datetime .dt-date {
+  color: var(--muted);
 }
 
 .page-head { margin-bottom: 24px; }

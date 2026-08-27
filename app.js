@@ -402,6 +402,23 @@
     save(TASKS_KEY, tasks);
   }
 
+  /* ===================== DATUM I VRIJEME ===================== */
+
+  var datetimeEl = document.getElementById("datetime");
+  var HR_DAYS = ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"];
+
+  function updateDateTime() {
+    var now = new Date();
+    var day = HR_DAYS[now.getDay()];
+    var date = now.toLocaleDateString("hr-HR", { day: "numeric", month: "long", year: "numeric" });
+    var time = now.toLocaleTimeString("hr-HR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    datetimeEl.innerHTML =
+      '<span class="dt-time">' + time + "</span><br>" +
+      '<span class="dt-date">' + day + ", " + date + "</span>";
+  }
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+
   /* ===================== INIT ===================== */
 
   seedDemoData();
